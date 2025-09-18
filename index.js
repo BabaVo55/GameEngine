@@ -17,7 +17,7 @@ const proj = [
     [0, 0, 1]
 ];
 
-const rozMat = (angle) => {
+const rotZMat = (angle) => {
     return [
         [Math.cos(angle), -Math.sin(angle), 0],
         [Math.sin(angle), Math.cos(angle), 0],
@@ -58,7 +58,7 @@ class Vertex {
         this.y = y;
         this.z = z
     }
-    draw(){
+    drawVertex(){
         ctx.beginPath();
         ctx.arc(this.x, this.y, 5, 0, 2 * Math.PI);
         ctx.fillStyle = 'white'
@@ -66,7 +66,11 @@ class Vertex {
     }
 }
 
+
 const P = [];
+
+const center = new Vertex(CW2, CH2, 0);
+
 P[0] = new Vertex(400, 200, 0);
 P[1] = new Vertex(600, 200, 0);
 P[2] = new Vertex(400, 400, 0);
@@ -88,7 +92,10 @@ const engine = () => {
 
     for (let v of P){
         //centralize
-        let rotated = multMat(rotYMat(angle), v);
+
+        let translated = new Vertex(v.x - center.x, v.y - center.y, v.z - center)
+        let rotated = multMat(rotZMat(angle), translated);
+        let movedBack = new Vertex(rotated.x + center.x, rotated.y + center.y, rotated.z + center.z)
         let proj2D = multMat(proj, rotated);
 
         drawVertex(proj2D.x, proj2D.y)
