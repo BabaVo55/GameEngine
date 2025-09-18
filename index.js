@@ -58,12 +58,19 @@ class Vertex {
         this.y = y;
         this.z = z
     }
-    drawVertex(){
+    // draw(){
+    //     ctx.beginPath();
+    //     ctx.arc(this.x, this.y, 5, 0, 2 * Math.PI);
+    //     ctx.fillStyle = 'white'
+    //     ctx.fill()
+    // }
+}
+
+const drawVertex = (x, y) => {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, 5, 0, 2 * Math.PI);
+        ctx.arc(x, y, 5, 0, 2 * Math.PI);
         ctx.fillStyle = 'white'
         ctx.fill()
-    }
 }
 
 
@@ -93,10 +100,10 @@ const engine = () => {
     for (let v of P){
         //centralize
 
-        let translated = new Vertex(v.x - center.x, v.y - center.y, v.z - center)
+        let translated = new Vertex(v.x - center.x, v.y - center.y, v.z - center.z)
         let rotated = multMat(rotZMat(angle), translated);
         let movedBack = new Vertex(rotated.x + center.x, rotated.y + center.y, rotated.z + center.z)
-        let proj2D = multMat(proj, rotated);
+        let proj2D = multMat(proj, movedBack);
 
         drawVertex(proj2D.x, proj2D.y)
     }
