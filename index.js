@@ -108,9 +108,17 @@ const T = [
     [4, 0, 6], [0, 2, 6],
     [1, 5, 3], [5, 7, 3],
     [4, 5, 0], [5, 1, 0],
-    [2, 3, 6], [3, 7, 6]
-
+    // [2, 3, 6], [3, 7, 6],
+    // [3, 2, 5], [2, 4, 1],
+    
 ]
+
+const edges = [
+  [0,1], [1,3], [3,2], [2,0], // front square
+  [4,5], [5,6], [6,7], [7,4], // back square
+  [0,4], [1,5], [2,6], [3,7]  // connecting front ↔ back
+];
+
 
 const engine = () => { 
 
@@ -131,16 +139,11 @@ const engine = () => {
 
         let translated = new Vertex(v.x - center.x, v.y - center.y, v.z - center.z)
         let rotated = multMat(rotZMat(angle), translated);
-        //Z rotation
         rotated = multMat(rotXMat(angle), rotated)
-        // let rotated2 = multMat(rotXMat(angle), new Vertex(300,400,300))
         let movedBack = new Vertex(rotated.x + center.x, rotated.y + center.y, rotated.z + center.z)
-        // let movedBack2 = new Vertex(rotated2.x + center.x, rotated2.y + center.y, rotated2.z + center.z)
         let proj2D = multMat(proj, movedBack);
-        // let proj2D2 = multMat(proj, movedBack2);
 
         drawVertex(proj2D.x, proj2D.y)
-        // drawVertex(proj2D2.x, proj2D2.y)
 
         projected.push(proj2D)
     }
@@ -154,6 +157,13 @@ const engine = () => {
         drawLine(p2.x, p2.y, p3.x, p3.y);
         drawLine(p3.x, p3.y, p1.x, p1.y);
     }
+
+    // for (let e of edges){
+        // const p1 = projected[e[0]];
+        // const p2 = projected[e[1]];
+        // drawLine(p1.x, p1.y, p2.x, p2.y);
+    // }
+
     
     requestAnimationFrame(engine);
 }
