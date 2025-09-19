@@ -78,6 +78,14 @@ const drawVertex = (x, y) => {
         ctx.fill()
 }
 
+const drawLine = (x1, y1, x2, y2) => {
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.strokeStyle = 'white'
+    ctx.stroke();
+}
+
 
 const P = [];
 
@@ -94,6 +102,16 @@ P[7] = new Vertex(400, 400, -200);
 
 // const dot = new Vertex();
 
+const T = [
+    [0, 1, 2], [1, 3, 2],
+    [5, 4, 7], [4, 6, 7],
+    [4, 0, 6], [0, 2, 6],
+    [1, 5, 3], [5, 7, 3],
+    [4, 5, 0], [5, 1, 0],
+    [2, 3, 6], [3, 7, 6]
+
+]
+
 const engine = () => { 
 
     angle += 0.009;
@@ -105,6 +123,8 @@ const engine = () => {
 
     // P[0].draw();
     // P.forEach(dot => dot.draw())
+
+    const projected = []
 
     for (let v of P){
         //centralize
@@ -121,7 +141,20 @@ const engine = () => {
 
         drawVertex(proj2D.x, proj2D.y)
         // drawVertex(proj2D2.x, proj2D2.y)
+
+        projected.push(proj2D)
     }
+
+    for (let t of T){
+        const p1 = projected[t[0]];
+        const p2 = projected[t[1]];
+        const p3 = projected[t[2]];
+
+        drawLine(p1.x, p1.y, p2.x, p2.y);
+        drawLine(p2.x, p2.y, p3.x, p3.y);
+        drawLine(p3.x, p3.y, p1.x, p1.y);
+    }
+    
     requestAnimationFrame(engine);
 }
 
