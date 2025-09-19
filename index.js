@@ -1,13 +1,18 @@
+// Obtain the Canvas element through its ID;
 const cvs = document.getElementById('canvas');
 const ctx = cvs.getContext('2d');
 
+// Set Canvas properties (width & height);
 cvs.width = 1080;
 cvs.height = 620;
 
+
+// C-Width & C-Height is created and set using canvas width & height, then CW2 & CH2 is created using half of its value??
 const CW = cvs.width;
 const CH = cvs.height;
 CW2 = CW / 2;
 CH2 = CH / 2;
+
 
 let angle = 0;
 
@@ -56,7 +61,7 @@ class Vertex {
     constructor(x = 0, y = 0, z = 0){
         this.x = x;
         this.y = y;
-        this.z = z
+        this.z = z;
     }
     // draw(){
     //     ctx.beginPath();
@@ -87,12 +92,12 @@ P[3] = new Vertex(600, 400, 0);
 
 const engine = () => { 
 
-    angle += 0.02;
+    angle += 0.009;
     ctx.clearRect(0, 0, CW, CH);
 
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, CW, CH);
-
+ 
 
     // P[0].draw();
     // P.forEach(dot => dot.draw())
@@ -102,6 +107,8 @@ const engine = () => {
 
         let translated = new Vertex(v.x - center.x, v.y - center.y, v.z - center.z)
         let rotated = multMat(rotZMat(angle), translated);
+        //Z rotation
+        rotated = multMat(rotXMat(angle), rotated)
         let movedBack = new Vertex(rotated.x + center.x, rotated.y + center.y, rotated.z + center.z)
         let proj2D = multMat(proj, movedBack);
 
