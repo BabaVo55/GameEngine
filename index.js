@@ -87,6 +87,10 @@ P[0] = new Vertex(400, 200, 0);
 P[1] = new Vertex(600, 200, 0);
 P[2] = new Vertex(400, 400, 0);
 P[3] = new Vertex(600, 400, 0);
+P[4] = new Vertex(400, 200, -200);
+P[5] = new Vertex(600, 200, -200);
+P[6] = new Vertex(600, 400, -200);
+P[7] = new Vertex(400, 400, -200);
 
 // const dot = new Vertex();
 
@@ -109,10 +113,14 @@ const engine = () => {
         let rotated = multMat(rotZMat(angle), translated);
         //Z rotation
         rotated = multMat(rotXMat(angle), rotated)
+        // let rotated2 = multMat(rotXMat(angle), new Vertex(300,400,300))
         let movedBack = new Vertex(rotated.x + center.x, rotated.y + center.y, rotated.z + center.z)
+        // let movedBack2 = new Vertex(rotated2.x + center.x, rotated2.y + center.y, rotated2.z + center.z)
         let proj2D = multMat(proj, movedBack);
+        // let proj2D2 = multMat(proj, movedBack2);
 
         drawVertex(proj2D.x, proj2D.y)
+        // drawVertex(proj2D2.x, proj2D2.y)
     }
     requestAnimationFrame(engine);
 }
