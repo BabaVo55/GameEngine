@@ -47,7 +47,7 @@ const rotYMat = (angle) => {
 }
 
 function multMat(m, v) {
-    const {x, y, z} = v; // Whats this? all assign to v?
+    const {x, y, z} = v; // Whats this? all assign to v? No, Destructuring the x, y and z values from v
 
     return {
         x: m[0][0] * x + m[0][1] * y + m[0][2] * z,
@@ -63,12 +63,6 @@ class Vertex {
         this.y = y;
         this.z = z;
     }
-    // draw(){
-    //     ctx.beginPath();
-    //     ctx.arc(this.x, this.y, 5, 0, 2 * Math.PI);
-    //     ctx.fillStyle = 'white'
-    //     ctx.fill()
-    // }
 }
 
 const drawVertex = (x, y) => {
@@ -91,38 +85,44 @@ const P = [];
 
 const center = new Vertex(CW2, CH2, 0);
 
-P[0] = new Vertex(400, 200, 0);
-P[1] = new Vertex(600, 200, 0);
-P[2] = new Vertex(400, 400, 0);
-P[3] = new Vertex(600, 400, 0);
-P[4] = new Vertex(400, 200, -200);
-P[5] = new Vertex(600, 200, -200);
-P[6] = new Vertex(600, 400, -200);
-P[7] = new Vertex(400, 400, -200);
+P[0] = new Vertex(400, 200, -200);
+P[1] = new Vertex(600, 200, -200);
+P[2] = new Vertex(400, 400, -200);
+P[3] = new Vertex(600, 400, -200);
+P[4] = new Vertex(400, 200, 0);
+P[5] = new Vertex(600, 200, 0);
+P[6] = new Vertex(600, 400, 0);
+P[7] = new Vertex(400, 400, 0);
 
 // const dot = new Vertex();
 
 const T = [
-    [0, 1, 2], [1, 3, 2],
-    [5, 4, 7], [4, 6, 7],
-    [4, 0, 6], [0, 2, 6],
-    [1, 5, 3], [5, 7, 3],
-    [4, 5, 0], [5, 1, 0],
-    // [2, 3, 6], [3, 7, 6],
-    // [3, 2, 5], [2, 4, 1],
-    
+    [0, 1, 2], [2, 3, 1],
+    [4, 7, 5], [5, 6, 7],
+    [0, 7, 2], [0, 4, 1],
+    [5, 1, 6], [6, 3, 7]
+    // [0, 1, 2], [1, 3, 2],
+    // [6, 7, 0], [1, 2, 3],
+    // [4, 5, 7], [5, 7, 1],
+    // [4, 0, 6], [0, 2, 6],
+    // [1, 5, 3], [5, 6, 3],
+    // [4, 5, 0], [5, 1, 0]    
 ]
 
-const edges = [
-  [0,1], [1,3], [3,2], [2,0], // front square
-  [4,5], [5,6], [6,7], [7,4], // back square
-  [0,4], [1,5], [2,6], [3,7]  // connecting front ↔ back
-];
+    // for (let t of T){
+    //     const p1 = projected[t[0]];
+    //     const p2 = projected[t[1]];
+    //     const p3 = projected[t[2]];
+
+    //     drawLine(p1.x, p1.y, p2.x, p2.y);
+    //     drawLine(p2.x, p2.y, p3.x, p3.y);
+    //     drawLine(p3.x, p3.y, p1.x, p1.y);
+    // }
 
 
 const engine = () => { 
 
-    angle += 0.009;
+    angle += 0.0005;
     ctx.clearRect(0, 0, CW, CH);
 
     ctx.fillStyle = 'black';
